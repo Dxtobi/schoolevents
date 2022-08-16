@@ -126,6 +126,69 @@ export const createEventAction = ( title, content, category, pic, edate) => asyn
     }
 };
 
+export const sendMails = ( text) => async (
+    dispatch,
+    getState
+) => {
+    try {
+       
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${ userInfo.token }`,
+            },
+        };
+
+        const { data } = await axios.post(
+            `/api/events/sendMails`,
+            { text },
+            config
+        );
+
+       
+    } catch ( error ) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        
+    }
+};
+
+export const saveMails = ( text) => async (
+    dispatch,
+    getState
+) => {
+    try {
+        dispatch( {
+            type: EVENTS_CREATE_REQUEST,
+        } );
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+
+        const { data } = await axios.post(
+            `/api/events/sendMails`,
+            { email },
+            config
+        );
+
+       
+    } catch ( error ) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        
+    }
+};
 export const deleteEventAction = ( id ) => async ( dispatch, getState ) => {
     try {
         dispatch( {

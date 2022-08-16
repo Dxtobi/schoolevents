@@ -1,5 +1,9 @@
 import React from 'react';
 import { Col, Container } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import {  } from '../../actions/eventsAction';
+
+
 
 const Footer = () => {
     return (

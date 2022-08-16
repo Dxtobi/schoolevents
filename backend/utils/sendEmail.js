@@ -33,11 +33,13 @@ const sendEmail = (options) => {
 };
 
 
-const sendBulkMessage = ({mails, text}) => {
-    mails.map((e, i) => {
-        sendEmail({to:e, subject:"New School Activity", text:text})
-    })
+const sendBulkMessage = ({ mails, text }) => {
+    
+    console.log(mails, text)
+   // mails.map((e, i) => {
+   //     sendEmail({to:e, subject:"New School Activity", text:text})
+   // })
 }
 
 
-module.exports = sendEmail;
+module.exports = sendBulkMessage;

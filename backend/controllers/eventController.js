@@ -1,4 +1,6 @@
-const Event = require( '../models/eventModel' );
+const Event = require('../models/eventModel');
+const Mails = require('../models/emailsModel');
+const SendMails = require( '../utils/sendEmail' );
 const asyncHandler = require( 'express-async-handler' );
 
 /*
@@ -70,6 +72,17 @@ const updateEvent = asyncHandler( async ( req, res ) => {
 
 } );
 
+
+const sendMails = asyncHandler( async ( req, res ) => {
+    const { text, } = req.body;
+
+    const mails = await Mails.find();
+
+    SendMails(mails, text)
+
+
+
+} );
 const deleteEvent = asyncHandler( async ( req, res ) => {
     const event = await Event.findById( req.params.id );
 
@@ -88,4 +101,4 @@ const deleteEvent = asyncHandler( async ( req, res ) => {
 
 } );
 
-module.exports = { getEvents, createEvent, getEventById, updateEvent, deleteEvent, getMyEvents };
+module.exports = { getEvents, createEvent, getEventById, updateEvent, deleteEvent, getMyEvents, sendMails };
