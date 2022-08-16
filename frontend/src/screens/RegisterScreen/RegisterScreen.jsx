@@ -11,7 +11,8 @@ const RegisterScreen = () => {
 
 
     const [ email, setEmail ] = useState( "" );
-    const [ name, setName ] = useState( "" );
+    const [name, setName] = useState("");
+    //const [ admin, setSetadni ] = useState( "" );
     const [ pic, setPic ] = useState(
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
     );

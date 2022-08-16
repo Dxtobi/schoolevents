@@ -10,6 +10,9 @@ import {
     USER_UPDATE_FAIL,
     USER_UPDATE_REQUEST,
     USER_UPDATE_SUCCESS,
+    USER_ADMIN_REQUEST,
+    USER_ADMIN_SUCCESS,
+    USER_ADMIN_FAIL
 } from './../constants/userConstants';
 
 export const login = ( email, password ) => async ( dispatch ) => {
@@ -81,6 +84,36 @@ export const register = ( name, email, password, pic ) => async ( dispatch ) => 
     }
 };
 
+export const registerAdmin = ( name, email, password, pic, admin ) => async ( dispatch ) => {
+    try {
+        //dispatch( { type: USER_REGISTER_REQUEST } );
+
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+            },
+        };
+
+        const { data } = await axios.post(
+            "/api/users",
+            { name, pic, email, password, admin },
+            config
+        );
+
+//console.log(data)
+
+       // localStorage.setItem( "userInfo", JSON.stringify( data ) );
+    } catch ( error ) {
+        dispatch( {
+            type: USER_REGISTER_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        } );
+    }
+};
+
 
 export const updateProfile = ( user ) => async ( dispatch, getState ) => {
     try {
@@ -107,6 +140,36 @@ export const updateProfile = ( user ) => async ( dispatch, getState ) => {
     } catch ( error ) {
         dispatch( {
             type: USER_UPDATE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        } );
+    }
+};
+
+export const getAdmins = (  ) => async ( dispatch, getState ) => {
+    try {
+        dispatch( { type: USER_ADMIN_REQUEST,} );
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${ userInfo.token }`,
+            },
+        };
+
+        const { data } = await axios.get( "/api/users/admins", config );
+
+        //console.log(data)
+        dispatch( { type: USER_ADMIN_SUCCESS, payload: data } );
+
+    } catch ( error ) {
+        dispatch( {
+            type: USER_ADMIN_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

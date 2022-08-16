@@ -1,51 +1,65 @@
 import React, { useEffect } from 'react';
-import { Button, Container, Row } from 'react-bootstrap';
+import {Container, Row } from 'react-bootstrap';
 import './LandingPage.css';
 import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { listEvents } from '../../actions/eventsAction';
 
 const LandingPage = () => {
 
     const history = useHistory();
+    const dispatch = useDispatch();
+    const events = useSelector( ( state ) => state.eventList );
 
     useEffect( () => {
-        const userInfo = localStorage.getItem( 'userInfo' );
-        if ( userInfo ) {
-            history.push( '/myevents' );
-        }
+     //   const userInfo = localStorage.getItem( 'userInfo' );
     }, [ history ] );
 
+    useEffect( () => {
+        dispatch( listEvents() )
+    }, []);
+    useEffect( () => {
+        console.log(events)
+    }, [events] );
+    //listEvents
 
     return (
         <div className='main'>
             <Container>
-                <Row><div className='intro-text'>
-                    <div>
-                        <h1 className='title'>Welcome to EvenX</h1>
-                        <p className='subtitle'>A place to manage events</p>
+                <Row>
+                    <div className='intro-text'>
+                        <div>
+                            <h1 className='title'>FPB school calender</h1>
+                        </div>
                     </div>
-                    <div className='buttonContainer'>
-                        <a href='/login'>
-                            <Button
-                                size='lg'
-                                className='landingbutton'
-                            >
-                                Login
-                            </Button>
-                        </a>
-                        <a href='/register'>
-                            <Button
-                                size='lg'
-                                className='landingbutton'
-                                variant='outline-primary'
-                            >
-                                Register
-                            </Button>
-                        </a>
-                    </div>
-                </div></Row>
+                    {
+                      Array.isArray(events.events) && events.events.map((e, i) => {
+                          return (<EventsDisplay e={e} />)
+                        })
+                    }
+                </Row>
             </Container>
         </div>
     );
 };
+
+const EventsDisplay = ({e}) => {
+    console.log(e)
+    return (
+        <div className='event-holder'>
+                              <div className='event_Date'>
+                                  Date:{e.edate}
+                              </div>
+                              <div className='e-head-d'>
+                                  <div className='event_head'>
+                                    {e.title}
+                                  </div>
+                                  <button className='event_btn-see'>
+                                    See more
+                                  </button>
+                                </div>
+                            </div>
+    )
+}
 
 export default LandingPage;

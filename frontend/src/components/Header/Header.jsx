@@ -21,7 +21,7 @@ function Header ( { setSearch } ) {
         <Navbar bg="primary" expand="lg" variant='dark'>
             <Container>
                 <Link to='/'>
-                    <Navbar.Brand>EvenX</Navbar.Brand>
+                    <Navbar.Brand>FPB SCHOOL EVENTS</Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
@@ -44,6 +44,9 @@ function Header ( { setSearch } ) {
                         </Nav.Link>
                         <NavDropdown title={ userInfo?.name } id="navbarScrollingDropdown">
                             <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
+
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="/dashboard">Dashboard</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item
                                 onClick={ logoutHandler }

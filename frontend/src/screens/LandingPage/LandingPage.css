@@ -29,6 +29,27 @@
 	width: 200px;
 	height: 55px;
 }
+.event-holder {
+    border: 1px solid #2780e3;
+    border-radius: 5px;
+	margin:20px 0px;
+}
+.event_Date {
+    padding: 20px;
+    font-size: x-large;
+    color: white;
+    background: #2780e3;
+    border-radius: 0px 0px 10px 10px;
+}
+.e-head-d {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+.event_head {
+    font-size: larger;
+    text-transform: uppercase;
+}
 
 @media only screen and (min-width: 1200px) {
 	.buttonContainer {

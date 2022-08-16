@@ -8,9 +8,10 @@ between the entity and API (service layer).
 */
 
 const registerUser = asyncHandler( async ( req, res ) => {
+    console.log('hit')
+    const { name, email, password, pic, admin } = req.body;
 
-    const { name, email, password, pic } = req.body;
-
+    //console.log(req.body)
     const userExists = await User.findOne( { email } );
 
     if ( userExists ) {
@@ -23,6 +24,7 @@ const registerUser = asyncHandler( async ( req, res ) => {
         email,
         password,
         pic,
+        admin
     } );
 
     if ( user ) {
@@ -30,12 +32,13 @@ const registerUser = asyncHandler( async ( req, res ) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin,
+            admin: user.admin,
             pic: user.pic,
             token: generateToken( user._id )
         } );
     } else {
-        res.status( 400 );
+        res.status(400);
+        console.log('error')
         throw new Error( "Error Ocurred" );
     }
 } );
@@ -51,7 +54,7 @@ const authUser = asyncHandler( async ( req, res ) => {
             _id: user._id,
             name: user.name,
             email: user.email,
-            isAdmin: user.isAdmin,
+            admin: user.admin,
             pic: user.pic,
             token: generateToken( user._id )
         } );
@@ -61,7 +64,19 @@ const authUser = asyncHandler( async ( req, res ) => {
     }
 } );
 
+const admins = asyncHandler(async (req, res) => {
+    console.log( req.user)
+    const user = await User.findById( req.user._id );
 
+    if ( user.admin === true ) {
+        const users = await User.find()
+        res.status( 200 ).send(users)
+    } else {
+        res.status( 404 );
+        throw new Error( "User Not Found" );
+    }
+
+} );
 
 const updateUserProfile = asyncHandler( async ( req, res ) => {
     const user = await User.findById( req.user._id );
@@ -95,4 +110,4 @@ const updateUserProfile = asyncHandler( async ( req, res ) => {
 
 
 
-module.exports = { registerUser, authUser, updateUserProfile };
+module.exports = { registerUser, authUser, updateUserProfile, admins };

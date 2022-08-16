@@ -12,7 +12,8 @@ import './SingleEvent.css';
 function CreateEvent ( { history } ) {
     const [ title, setTitle ] = useState( "" );
     const [ content, setContent ] = useState( "" );
-    const [ category, setCategory ] = useState( "" );
+    const [category, setCategory] = useState("");
+    const [ date, setDate ] = useState( "" );
     const [ pic, setPic ] = useState(
         "https://res.cloudinary.com/practicaldev/image/fetch/s--P-zvMTgt--/c_imagga_scale,f_auto,fl_progressive,h_900,q_auto,w_1600/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg"
     );
@@ -44,7 +45,8 @@ function CreateEvent ( { history } ) {
             const data = new FormData();
             data.append( 'file', pics );
             data.append( 'upload_preset', 'eventx' );
-            data.append( 'cloud_name', 'dyl8nylbd' );
+            data.append('cloud_name', 'dyl8nylbd');
+           
             fetch( 'https://api.cloudinary.com/v1_1/dyl8nylbd/image/upload', {
                 method: 'post',
                 body: data
@@ -63,7 +65,7 @@ function CreateEvent ( { history } ) {
 
     const submitHandler = ( e ) => {
         e.preventDefault();
-        dispatch( createEventAction( title, content, category, pic ) );
+        dispatch( createEventAction( title, content, category, pic, date ) );
         if ( !title || !content || !category ) return;
 
         resetHandler();
@@ -121,7 +123,18 @@ function CreateEvent ( { history } ) {
                                 </Form.Group>
                                 { picMessage && (
                                     <ErrorMessage variant="danger">{ picMessage }</ErrorMessage>
-                                ) }
+                                )}
+                                <br/>
+                                <Form.Group >
+                                    <Form.Label>Event Picture</Form.Label>
+                                    <input
+                                        onChange={ ( e ) => setDate( e.target.value ) }
+                                        id="custom-file"
+                                        type="date"
+                                        label="Date for Event"
+                                        custom
+                                    />
+                                </Form.Group>
                                 <Form.Group controlId="pic">
                                     <Form.Label>Event Picture</Form.Label>
                                     <Form.File

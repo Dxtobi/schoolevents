@@ -26,11 +26,47 @@ export const listEvents = () => async ( dispatch, getState ) => {
 
         const config = {
             headers: {
-                Authorization: `Bearer ${ userInfo.token }`,
+           //     Authorization: `Bearer ${ userInfo.token }`,
             },
         };
 
-        const { data } = await axios.get( `/api/events`, config );
+        const { data } = await axios.get( `/api/events/all` );
+
+        dispatch( {
+            type: EVENTS_LIST_SUCCESS,
+            payload: data,
+        });
+        
+        console.log(data)
+    } catch ( error ) {
+        const message =
+            error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+        dispatch( {
+            type: EVENTS_LIST_FAIL,
+            payload: message,
+        } );
+    }
+};
+
+export const listMyEvents = () => async ( dispatch, getState ) => {
+    try {
+        dispatch( {
+            type: EVENTS_LIST_REQUEST,
+        } );
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+             Authorization: `Bearer ${ userInfo.token }`,
+            },
+        };
+
+        const { data } = await axios.get( `/api/events/allmine`, config );
 
         dispatch( {
             type: EVENTS_LIST_SUCCESS,
@@ -48,7 +84,7 @@ export const listEvents = () => async ( dispatch, getState ) => {
     }
 };
 
-export const createEventAction = ( title, content, category, pic, ) => async (
+export const createEventAction = ( title, content, category, pic, edate) => async (
     dispatch,
     getState
 ) => {
@@ -70,7 +106,7 @@ export const createEventAction = ( title, content, category, pic, ) => async (
 
         const { data } = await axios.post(
             `/api/events/create`,
-            { title, content, category, pic },
+            { title, content, category, pic, edate },
             config
         );
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container } from 'react-bootstrap';
 
 const Footer = () => {
     return (
@@ -11,9 +11,12 @@ const Footer = () => {
             justifyContent: 'center'
         } }>
             <Container>
-                <Row>
-                    <Col className='text-center py-3'>Developed with passion</Col>
-                </Row>
+                        <div className='footer-form-holder'>
+                            <div className='sub-details'>Subscribe for School Update</div>
+                            <input className='footer-input' placeholder='Email' />
+                            <button className='submit-btn'>Subscribe</button>
+                        </div>
+                    <Col className='text-center py-3'>Developed for FPB</Col>
             </Container>
         </footer>
     );

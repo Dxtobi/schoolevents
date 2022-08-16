@@ -8,10 +8,10 @@ const eventRoutes = require( './routes/eventRoutes' );
 const { notFound, errorHandler } = require( "./middlewares/errorMiddleware" );
 
 
-/* 
-It's a due purpose project. Firstly a prototype for a custom event management solution. 
-Secondly, a codebase for future education content (video tutorials). 
-Therefore the many comments throughout the project. 
+/*
+It's a due purpose project. Firstly a prototype for a custom event management solution.
+Secondly, a codebase for future education content (video tutorials).
+Therefore the many comments throughout the project.
 */
 
 const app = express();

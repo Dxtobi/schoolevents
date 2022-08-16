@@ -2,17 +2,23 @@ const Event = require( '../models/eventModel' );
 const asyncHandler = require( 'express-async-handler' );
 
 /*
-This is a "controller" (a logic model) where the business logic will occur 
-between the entity and API (service layer). 
+    This is a "controller" (a logic model) where the business logic will occur 
+    between the entity and API (service layer). 
 */
 
+
 const getEvents = asyncHandler( async ( req, res ) => {
-    const events = await Event.find( { user: req.user._id } );
+    const events = await Event.find().populate( 'user', [ 'name'] );
+    res.json( events );
+});
+
+const getMyEvents = asyncHandler( async ( req, res ) => {
+    const events = await Event.find({user:req.user._id}).populate( 'user', [ 'name'] );
     res.json( events );
 } );
 
 const createEvent = asyncHandler( async ( req, res ) => {
-    const { title, content, category, pic } = req.body;
+    const { title, content, category, pic, edate } = req.body;
 
     // TODO: Add picture
     if ( !title || !content || !category || !pic ) {
@@ -20,7 +26,7 @@ const createEvent = asyncHandler( async ( req, res ) => {
         throw new Error( 'Please fill all the fields' );
         return;
     } else {
-        const event = new Event( { user: req.user._id, title, content, category, pic } );
+        const event = new Event( { user: req.user._id, title, content, category, pic, edate } );
         const createEvent = await event.save();
 
         res.status( 201 ).json( createEvent );
@@ -40,7 +46,7 @@ const getEventById = asyncHandler( async ( req, res ) => {
 } );
 
 const updateEvent = asyncHandler( async ( req, res ) => {
-    const { title, content, category, pic } = req.body;
+    const { title, content, category, pic, edate } = req.body;
     const event = await Event.findById( req.params.id );
 
     if ( event.user.toString() !== req.user._id.toString() ) {
@@ -53,6 +59,7 @@ const updateEvent = asyncHandler( async ( req, res ) => {
         event.content = content;
         event.category = category;
         event.pic = pic;
+        ent.edate = edate;
 
         const updatedEvent = await event.save();
         res.json( updatedEvent );
@@ -81,4 +88,4 @@ const deleteEvent = asyncHandler( async ( req, res ) => {
 
 } );
 
-module.exports = { getEvents, createEvent, getEventById, updateEvent, deleteEvent };
+module.exports = { getEvents, createEvent, getEventById, updateEvent, deleteEvent, getMyEvents };

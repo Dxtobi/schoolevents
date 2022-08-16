@@ -3,15 +3,14 @@ import MainScreen from '../../components/MainScreen';
 import { Link } from 'react-router-dom';
 import { Accordion, Badge, Button, Card, Col, Row } from 'react-bootstrap';
 
-import './MyEvents.css';
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteEventAction, listMyEvents } from "../../actions/eventsAction";
+import { deleteEventAction, listEvents } from "../../actions/eventsAction";
 import Loading from "../../components/Loading/Loading";
 import ErrorMessage from "../../components/ErroMessage/ErrorMessage";
 
 
-const MyEvents = ( { history, search } ) => {
+const AllEvents = ( { history, search } ) => {
     const dispatch = useDispatch();
 
     const eventList = useSelector( ( state ) => state.eventList );
@@ -34,8 +33,9 @@ const MyEvents = ( { history, search } ) => {
     const eventUpdate = useSelector( ( state ) => state.eventUpdate );
     const { success: successUpdate } = eventUpdate;
 
-    useEffect( () => {
-        dispatch( listMyEvents() );
+    useEffect(() => {
+        
+        dispatch( listEvents() );
         if ( !userInfo ) {
             history?.push( "/" );
         }
@@ -48,6 +48,10 @@ const MyEvents = ( { history, search } ) => {
         successUpdate,
     ] );
 
+    useEffect(() => {
+        
+       console.log(eventList)
+    }, [eventList] );
     const deleteHandler = ( id ) => {
         if ( window.confirm( "Are you sure?" ) ) {
             dispatch( deleteEventAction( id ) );
@@ -146,4 +150,4 @@ const MyEvents = ( { history, search } ) => {
     );
 };
 
-export default MyEvents;
+export default AllEvents;

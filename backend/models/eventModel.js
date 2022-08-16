@@ -24,6 +24,10 @@ const eventSchema = mongoose.Schema(
             default:
                 "https://res.cloudinary.com/practicaldev/image/fetch/s--P-zvMTgt--/c_imagga_scale,f_auto,fl_progressive,h_900,q_auto,w_1600/https://dev-to-uploads.s3.amazonaws.com/i/qyix6eyhrnc8x9c44yp2.jpg",
         },
+        edate: {
+            type: Date,
+            required: true,
+        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
