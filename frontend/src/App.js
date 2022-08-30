@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Footer from './components/Footer/Footer';
+import Footer from './components/Footer/Footer.js';
 import Header from './components/Header/Header';
 import LandingPage from './screens/LandingPage/LandingPage';
 import HomePage from './screens/Homepage/Homepage';

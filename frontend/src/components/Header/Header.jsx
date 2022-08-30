@@ -21,7 +21,7 @@ function Header ( { setSearch } ) {
         <Navbar bg="primary" expand="lg" variant='dark'>
             <Container>
                 <Link to='/'>
-                    <Navbar.Brand>FPB SCHOOL EVENTS</Navbar.Brand>
+                    <Navbar.Brand>FPB SESSION SCHEDULE</Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">

@@ -57,6 +57,9 @@ const AllEvents = ( { history, search } ) => {
             dispatch( deleteEventAction( id ) );
         }
     };
+    if (loading) {
+        return <Loading />
+    }
     return (
         <MainScreen title={ `Hi ${ userInfo?.name }.` }>
             <Link to='/createevent'>
@@ -67,10 +70,10 @@ const AllEvents = ( { history, search } ) => {
                     Create New Event
                 </Button>
             </Link>
+
             { error && <ErrorMessage variant='danger' /> }
-            { loading && <Loading /> }
-            { events && events.filter( ( filteredEvent ) =>
-                filteredEvent.title.toLowerCase().includes( search.toLowerCase() ) ).reverse().map( ( event ) => {
+
+            { events && events.reverse().map( ( event ) => {
                     return <Accordion key={ event._id }>
                         <Card style={ { margin: 10 } }>
                             <Card.Header style={ { display: 'flex' } }>
@@ -81,7 +84,6 @@ const AllEvents = ( { history, search } ) => {
                                     cursor: 'pointer',
                                     alignSelf: 'center',
                                     fontSize: 18,
-
                                 } }
                                 >
                                     <Accordion.Toggle

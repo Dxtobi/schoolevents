@@ -58,9 +58,22 @@
 
 	.title {
 		padding: 0 100px;
+		color: #2780e3;
 	}
 }
-
+.title {
+	padding: 0 100px;
+	color: #2780e3;
+}
+.img-logo {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+img.imgLogo {
+    width: 200px;
+}
 @media only screen and (max-width: 768px) {
 	.title {
 		font-size: 60px;

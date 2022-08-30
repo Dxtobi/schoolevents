@@ -176,8 +176,8 @@ export const saveMails = ( text) => async (
 
         const { data } = await axios.post(
             `/api/events/sendMails`,
-            { email },
-            config
+            { text },
+            //config
         );
 
        

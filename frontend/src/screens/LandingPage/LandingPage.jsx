@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Container, Row } from 'react-bootstrap';
 import './LandingPage.css';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listEvents } from '../../actions/eventsAction';
+import moment from 'moment';
 
 const LandingPage = () => {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const events = useSelector( ( state ) => state.eventList );
+    const events = useSelector((state) => state.eventList);
+    
 
     useEffect( () => {
      //   const userInfo = localStorage.getItem( 'userInfo' );
@@ -27,9 +29,12 @@ const LandingPage = () => {
         <div className='main'>
             <Container>
                 <Row>
+                    <div className='img-logo'>
+                        <img src='/fpblogo.jpg' alt="" className='imgLogo'/>
+                    </div>
                     <div className='intro-text'>
                         <div>
-                            <h1 className='title'>FPB school calender</h1>
+                            <h1 className='title'>FPB SESSION SCHEDULE</h1>
                         </div>
                     </div>
                     {
@@ -43,22 +48,30 @@ const LandingPage = () => {
     );
 };
 
-const EventsDisplay = ({e}) => {
+const EventsDisplay = ({ e }) => {
+    const [show, setShow] = useState(false)
     console.log(e)
     return (
         <div className='event-holder'>
                               <div className='event_Date'>
-                                  Date:{e.edate}
+                                  Date:{moment(e.edate).format('MMMM Do YYYY, h:mm:ss a')}
                               </div>
                               <div className='e-head-d'>
                                   <div className='event_head'>
                                     {e.title}
                                   </div>
-                                  <button className='event_btn-see'>
+                                  <button onClick={()=>setShow(!show)} className='event_btn-see'>
                                     See more
                                   </button>
-                                </div>
-                            </div>
+            </div>
+            {
+                show && <div className=''>
+                    <h1 className=''>{e.category}</h1>
+                    <div>{e.content}</div>
+                </div>
+            }
+        </div>
+        
     )
 }
 
